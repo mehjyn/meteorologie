@@ -1,0 +1,1434 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Météorologie du goût — Portfolio de thèse EHESS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Projet de thèse en anthropologie à l'EHESS — une enquête sensorielle et politique sur la glace, du terrain à la métaphysique du goût.">
+  <style>
+/* =====================================================================
+   Météorologie du goût — Design System
+   Base Type & Color Tokens
+   ---------------------------------------------------------------------
+   "Terre & terrain" : beige chaleureux, chocolat profond, trois gradients
+   de pilier révélés au hover (glace, ocre, métaphysique).
+   Toutes les couleurs sont définies en OKLCH pour la cohérence perceptuelle.
+   Source: src/styles.css of field-to-frost-folio.
+   ===================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* -------- Font families -------- */
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* =====================================================================
+     PALETTE — "Terre & terrain"
+     ===================================================================== */
+
+  /* Fondations : beige chaleureux & chocolat profond */
+  --background: oklch(0.953 0.018 85);   /* #F5F0E6  beige papier */
+  --foreground: oklch(0.27 0.045 45);    /* #3D2314  chocolat profond */
+  --cream: oklch(0.98 0.01 90);          /* presque blanc crémeux */
+  --ink: oklch(0.27 0.045 45);           /* même que foreground */
+  --earth: oklch(0.953 0.018 85);
+  --earth-deep: oklch(0.78 0.04 70);     /* terre cuite atténuée */
+
+  /* Surfaces & UI */
+  --card: oklch(0.965 0.014 85);
+  --card-foreground: oklch(0.27 0.045 45);
+  --popover: oklch(0.97 0.012 85);
+  --popover-foreground: oklch(0.27 0.045 45);
+
+  --primary: oklch(0.27 0.045 45);
+  --primary-foreground: oklch(0.97 0.014 85);
+  --secondary: oklch(0.91 0.022 80);
+  --secondary-foreground: oklch(0.27 0.045 45);
+  --muted: oklch(0.92 0.018 80);
+  --muted-foreground: oklch(0.45 0.035 50);
+  --accent: oklch(0.88 0.03 75);
+  --accent-foreground: oklch(0.27 0.045 45);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+
+  --border: oklch(0.85 0.025 75);
+  --input: oklch(0.88 0.025 75);
+  --ring: oklch(0.55 0.05 50);
+
+  /* =====================================================================
+     LES TROIS PILIERS — gradients signature
+     Chaque pilier correspond à une "entrée dans la matière glace".
+     ===================================================================== */
+
+  /* I · Technique — bleu acier glacé */
+  --ice-from: oklch(0.32 0.08 250);      /* #1E3A5F */
+  --ice-to:   oklch(0.65 0.16 245);      /* #4A90E2 */
+
+  /* II · Économie & Social — ocre / or chaud */
+  --ochre-from: oklch(0.5 0.12 80);      /* #8B6914 */
+  --ochre-to:   oklch(0.78 0.1 75);      /* #D4A574 */
+
+  /* III · Métaphysique & Sensoriel — indigo / violet */
+  --meta-from: oklch(0.28 0.1 295);      /* #2D1B4E */
+  --meta-to:   oklch(0.5 0.2 305);       /* #7B3FA0 */
+
+  /* =====================================================================
+     RAYONS & RADIUS
+     ===================================================================== */
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px); /* 4px  */
+  --radius-md: calc(var(--radius) - 2px); /* 6px  */
+  --radius-lg: var(--radius);             /* 8px  */
+  --radius-xl: calc(var(--radius) + 4px); /* 12px */
+  --radius-2xl: calc(var(--radius) + 8px);/* 16px */
+  --radius-3xl: calc(var(--radius) + 12px);/* 20px */
+
+  /* =====================================================================
+     TYPOGRAPHIE — échelle sémantique
+     Serif Playfair Display pour les titres et citations ;
+     Sans Inter pour texte courant et UI.
+     Figures "lnum" (chiffres anciens) sur les titres.
+     ===================================================================== */
+
+  /* Display — Hero (clamp) */
+  --fs-display: clamp(2.75rem, 9vw, 7.5rem);
+  --lh-display: 0.95;
+  --ls-display: -0.01em;
+
+  /* Section H2 */
+  --fs-h2: clamp(2.25rem, 5vw, 3.75rem);   /* ~36–60px */
+  --lh-h2: 1.05;
+
+  /* Sub-h3 (carte, terrain) */
+  --fs-h3: clamp(1.5rem, 2.4vw, 2rem);
+  --lh-h3: 1.15;
+
+  /* Baseline copy */
+  --fs-body: 1rem;                         /* 16px */
+  --fs-body-lg: 1.0625rem;                 /* 17px */
+  --lh-body: 1.7;
+
+  /* Petites capitales / étiquettes */
+  --fs-eyebrow: 0.75rem;                   /* 12px */
+  --tracking-eyebrow: 0.25em;
+
+  /* Citation sérif italique */
+  --fs-quote: clamp(1.25rem, 1.8vw, 1.5rem);
+  --lh-quote: 1.45;
+
+  /* =====================================================================
+     TRANSITIONS — rythme "cinéma"
+     ===================================================================== */
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);   /* ease-out "silk" signature */
+  --dur-short: 300ms;
+  --dur-mid: 500ms;
+  --dur-long: 700ms;
+  --dur-xl: 900ms;
+}
+
+/* =====================================================================
+   DARK MODE — "nuit en atelier"
+   ===================================================================== */
+.dark {
+  --background: oklch(0.18 0.025 45);
+  --foreground: oklch(0.95 0.018 85);
+  --card: oklch(0.22 0.03 45);
+  --card-foreground: oklch(0.95 0.018 85);
+  --popover: oklch(0.22 0.03 45);
+  --popover-foreground: oklch(0.95 0.018 85);
+  --primary: oklch(0.95 0.018 85);
+  --primary-foreground: oklch(0.27 0.045 45);
+  --secondary: oklch(0.3 0.03 45);
+  --secondary-foreground: oklch(0.95 0.018 85);
+  --muted: oklch(0.28 0.025 45);
+  --muted-foreground: oklch(0.7 0.025 70);
+  --accent: oklch(0.32 0.04 50);
+  --accent-foreground: oklch(0.95 0.018 85);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.6 0.04 70);
+}
+
+/* =====================================================================
+   APPLIQUÉS — styles sémantiques
+   ===================================================================== */
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "lnum";
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: var(--fs-display); line-height: var(--lh-display); }
+h2 { font-size: var(--fs-h2);       line-height: var(--lh-h2); }
+h3 { font-size: var(--fs-h3);       line-height: var(--lh-h3); }
+
+p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: color-mix(in oklab, var(--foreground) 75%, transparent);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--foreground) 50%, transparent);
+}
+
+.italic-serif, em {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-quote);
+  line-height: var(--lh-quote);
+}
+
+code, pre, .mono {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+::selection {
+  background-color: var(--ink);
+  color: var(--cream);
+}
+
+/* =====================================================================
+   UTILITAIRES — texture & gradients signature
+   ===================================================================== */
+.grain-texture {
+  background-image:
+    radial-gradient(circle at 20% 30%, oklch(0.85 0.04 70 / 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, oklch(0.82 0.05 60 / 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, oklch(0.78 0.04 80 / 0.3) 0%, transparent 50%);
+}
+
+.gradient-ice    { background-image: linear-gradient(135deg, var(--ice-from),   var(--ice-to)); }
+.gradient-ochre  { background-image: linear-gradient(135deg, var(--ochre-from), var(--ochre-to)); }
+.gradient-meta   { background-image: linear-gradient(135deg, var(--meta-from),  var(--meta-to)); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+</style>
+  <style>
+/* UI kit styles — direct CSS recreation of Tailwind classes used in source */
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+.container { max-width: 80rem; margin: 0 auto; padding: 0 24px; }
+.container.narrow { max-width: 60rem; }
+
+/* Scroll progress */
+.scroll-progress { position: fixed; left: 0; right: 0; top: 0; height: 2px; background: color-mix(in oklab, var(--foreground) 80%, transparent); transform-origin: left; z-index: 60; }
+
+/* ====== NAV ====== */
+.site-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; border-bottom: 1px solid transparent; transition: background 500ms var(--ease-silk), border-color 500ms var(--ease-silk), backdrop-filter 500ms var(--ease-silk); }
+.site-nav.scrolled { background: color-mix(in oklab, var(--background) 80%, transparent); backdrop-filter: blur(10px); border-bottom-color: color-mix(in oklab, var(--border) 60%, transparent); }
+.site-nav.on-dark .brand, .site-nav.on-dark .brand .dot { color: rgba(255,255,255,.9); }
+.site-nav.on-dark .brand .dot { color: rgba(255,255,255,.5); }
+.site-nav.on-dark .navlink { color: rgba(255,255,255,.6); }
+.site-nav.on-dark .navlink:hover { color: #fff; }
+.site-nav.on-dark .navlink::after { background: #fff; }
+.site-nav.on-dark .pill-pdf { color: rgba(255,255,255,.85); border-color: rgba(255,255,255,.3); }
+.site-nav.on-dark .pill-pdf:hover { background: #fff; color: oklch(0.12 0.04 255); border-color: #fff; }
+.site-nav.on-dark.scrolled { background: color-mix(in oklab, oklch(0.12 0.04 255) 82%, transparent); border-bottom-color: rgba(255,255,255,.08); }
+.site-nav, .site-nav .brand, .site-nav .navlink, .site-nav .pill-pdf { transition: color 500ms var(--ease-silk), background 500ms var(--ease-silk), border-color 500ms var(--ease-silk); }
+.site-nav nav { max-width: 80rem; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
+.brand { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--foreground); text-decoration: none; }
+.brand .dot { color: color-mix(in oklab, var(--foreground) 50%, transparent); }
+.site-nav ul { display:flex; gap: 32px; margin: 0; padding: 0; list-style: none; align-items: center; }
+.navlink { position: relative; font-size: 14px; font-weight: 500; color: color-mix(in oklab, var(--foreground) 70%, transparent); text-decoration: none; transition: color var(--dur-short); }
+.navlink::after { content:""; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0; background: var(--foreground); transition: width var(--dur-short) var(--ease-silk); }
+.navlink:hover { color: var(--foreground); }
+.navlink:hover::after { width: 100%; }
+.pill-pdf { display:inline-flex; align-items:center; gap: 8px; padding: 8px 16px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); font-size: 12px; font-weight: 500; color: var(--foreground); text-decoration: none; transition: all var(--dur-mid) var(--ease-silk); }
+.pill-pdf:hover { background: var(--foreground); color: var(--background); border-color: var(--foreground); }
+
+/* ====== BUTTONS ====== */
+.btn-primary { position: relative; overflow: hidden; display:inline-flex; align-items:center; gap: 12px; padding: 14px 28px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 80%, transparent); background: var(--foreground); color: var(--background); font-family: var(--font-sans); font-size: 14px; font-weight: 500; text-decoration: none; transition: transform var(--dur-mid) var(--ease-silk), box-shadow var(--dur-mid) var(--ease-silk); cursor: pointer; }
+.btn-primary:hover { transform: scale(1.02); box-shadow: 0 25px 50px -12px oklch(0 0 0 / .25); }
+.btn-primary .bg-meta, .btn-primary .bg-ochre { position: absolute; inset: 0; z-index: 0; transform: translateY(100%); transition: transform var(--dur-long) var(--ease-silk); }
+.btn-primary .bg-meta { background: linear-gradient(135deg, var(--meta-from), var(--meta-to)); }
+.btn-primary .bg-ochre { background: linear-gradient(135deg, var(--ochre-from), var(--ochre-to)); }
+.btn-primary:hover .bg-meta, .btn-primary:hover .bg-ochre { transform: translateY(0); }
+.btn-primary .label, .btn-primary svg { position: relative; z-index: 1; }
+.btn-primary.inverse { background: var(--background); color: var(--foreground); border-color: var(--background); }
+.btn-primary.inverse:hover .label { color: var(--background); transition: color var(--dur-long); }
+.btn-ghost { display:inline-flex; align-items:center; gap: 10px; padding: 14px 24px; border-radius: 999px; background: transparent; border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); color: var(--foreground); font-family: var(--font-sans); font-size: 14px; font-weight: 500; text-decoration: none; transition: all var(--dur-mid) var(--ease-silk); cursor: pointer; }
+.btn-ghost.inverse { color: var(--background); border-color: color-mix(in oklab, var(--background) 40%, transparent); }
+.btn-ghost.inverse:hover { background: var(--background); color: var(--foreground); border-color: var(--background); }
+.btn-link { display:inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: color-mix(in oklab, var(--foreground) 70%, transparent); text-decoration: none; text-underline-offset: 4px; transition: color var(--dur-mid); }
+.btn-link:hover { color: var(--foreground); text-decoration: underline; }
+
+/* ====== SPLASH (intro cornet 3D) ====== */
+.splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: space-between; overflow: hidden; padding: 40px 24px; opacity: 1; transition: opacity 750ms var(--ease-silk); }
+.splash--leaving { opacity: 0; }
+.splash-bg { position: absolute; inset: 0; pointer-events: none; }
+.splash-bg .blob { position: absolute; border-radius: 50%; filter: blur(130px); }
+.splash-bg .blob--ice { left: 25%; top: 25%; width: 28rem; height: 28rem; background: oklch(0.65 0.16 245 / 0.32); animation: splash-blob-a 10s ease-in-out infinite; }
+.splash-bg .blob--meta { right: 25%; bottom: 25%; width: 24rem; height: 24rem; background: oklch(0.5 0.2 305 / 0.28); animation: splash-blob-b 13s ease-in-out infinite 3s; }
+@keyframes splash-blob-a { 0%,100%{ transform:scale(1); opacity:.22 } 50%{ transform:scale(1.12); opacity:.38 } }
+@keyframes splash-blob-b { 0%,100%{ transform:scale(1); opacity:.15 } 50%{ transform:scale(1.16); opacity:.28 } }
+.splash-bg .spotlight { position:absolute; inset:0; background: radial-gradient(ellipse 55% 55% at 50% 52%, oklch(0.65 0.16 245 / .12) 0%, transparent 70%), radial-gradient(ellipse 35% 35% at 50% 52%, oklch(1 0 0 / .04) 0%, transparent 100%); }
+.splash-bg .vignette { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 40%, oklch(0.05 0.01 45 / .85) 100%); }
+.splash-top { position: relative; z-index: 10; opacity: 1; animation: splash-fade .9s .3s var(--ease-silk) both; }
+.splash-kicker { font-family: var(--font-sans); font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: rgba(255,255,255,.25); }
+.splash-kicker .sep { opacity: .6; margin: 0 .3em; }
+.splash-center { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 24px; max-width: 56rem; width: 100%; }
+.splash-quote { opacity: 1; animation: splash-fadeup 1.1s .6s var(--ease-silk) both; margin: 0; }
+.splash-quote p { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: clamp(1.1rem, 2.8vw, 1.85rem); line-height: 1.6; color: rgba(255,255,255,.65); text-align: center; margin: 0; }
+@media (max-width: 640px) { .hide-sm { display: none; } }
+.splash-cone-wrap { position: relative; z-index: 10; width: 340px; height: 340px; opacity: 1; animation: splash-rise 1.4s .85s var(--ease-silk) both; }
+@media (min-width: 768px) { .splash-cone-wrap { width: 400px; height: 400px; } }
+.splash-cone-halo { position:absolute; inset:0; border-radius:50%; filter: blur(60px); background: radial-gradient(circle at 50% 60%, oklch(0.72 0.14 245 / .18), transparent 70%); transform: scale(1.3); z-index:-1; }
+.icecream3d { position: absolute; inset: 0; }
+.splash-bg .blob--ice { position: absolute; left: 25%; top: 25%; width: 28rem; height: 28rem; border-radius: 50%; filter: blur(130px); background: oklch(0.65 0.16 245 / 0.45); animation: splash-blob-a 10s ease-in-out infinite; }
+.splash-bg .blob--meta { position: absolute; right: 25%; bottom: 25%; width: 24rem; height: 24rem; border-radius: 50%; filter: blur(120px); background: oklch(0.5 0.2 305 / 0.35); animation: splash-blob-b 13s ease-in-out infinite 3s; }
+.splash-bg .blob--warm { position: absolute; right: 5%; top: 5%; width: 38rem; height: 38rem; border-radius: 50%; filter: blur(120px); background: radial-gradient(circle, oklch(0.62 0.24 35 / 0.9), oklch(0.52 0.22 20 / 0.5), transparent 72%); opacity: 0; }
+.vignette-light { position: absolute; inset: 0; background: radial-gradient(ellipse 85% 85% at 50% 50%, transparent 30%, oklch(0.04 0.01 0 / 0.40) 100%); pointer-events: none; }
+.splash-melted-cta { display: flex; flex-direction: column; align-items: center; gap: 16px; animation: splash-fadeup .9s var(--ease-silk) both; }
+.splash-melted-label { font-family: var(--font-serif); font-style: italic; font-size: 14px; letter-spacing: .06em; color: rgba(255,255,255,.5); margin: 0; }
+.splash-continue { display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: 14px 28px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: rgba(255,255,255,.9); cursor: pointer; transition: all 400ms var(--ease-silk); letter-spacing: .04em; }
+.splash-continue:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.7); color: #fff; transform: scale(1.03); }
+.splash-continue-arrow { font-size: 16px; transition: transform 300ms; }
+.splash-continue:hover .splash-continue-arrow { transform: translateX(4px); }
+.splash-timer { font-family: var(--font-sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.28); margin: 0; text-align: center; }
+.splash-timer strong { color: rgba(255,255,255,.55); font-weight: 500; }
+.splash-sun { position: absolute; left: 28px; top: 28px; pointer-events: none; z-index: 1; opacity: .85; }
+.splash-bottom { position: relative; z-index: 10; opacity: 1; animation: splash-fadeup 1s 1.6s var(--ease-silk) both; }
+.splash-enter { display: flex; flex-direction: column; align-items: center; gap: 12px; background: none; border: 0; cursor: pointer; color: rgba(255,255,255,.4); transition: color 300ms; padding: 8px 16px; }
+.splash-enter:hover { color: rgba(255,255,255,.75); }
+.splash-enter-label { font-family: var(--font-sans); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; }
+.splash-enter-rule { display: flex; flex-direction: column; align-items: center; gap: 4px; animation: splash-bob 2s ease-in-out infinite; }
+.splash-enter-rule .rule-line { display:block; width: 1px; height: 32px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,.3)); }
+.splash-enter-rule .rule-arrow { font-size: 9px; }
+@keyframes splash-fade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes splash-fadeup { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes splash-rise { from { opacity: 0; transform: scale(.88); } to { opacity: 1; transform: scale(1); } }
+@keyframes splash-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@media (prefers-reduced-motion: reduce) {
+  .splash-top, .splash-quote, .splash-cone-wrap, .splash-bottom { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .splash-bg .blob { animation: none !important; }
+}
+
+/* ====== WIND SECTION ("Le vent révèle") ====== */
+.wind-section { position: relative; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; background: oklch(0.09 0.03 255); }
+.wind-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; display: block; }
+.wind-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 24px; gap: 32px; width: 100%; max-width: 72rem; }
+.wind-counter { font-family: var(--font-sans); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.25); }
+.wind-phrase-wrap { position: relative; min-height: 14rem; display: flex; align-items: center; justify-content: center; width: 100%; }
+.wind-phrase { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 0 24px; }
+.wind-phrase-text { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: clamp(1.6rem, 4vw, 3.2rem); line-height: 1.25; color: #fff; text-align: center; max-width: 56rem; transition: none; }
+.wind-phrase-text em { font-style: normal; color: rgba(255,255,255,.5); }
+.wind-phrase.is-entering .wind-phrase-text { animation: wind-in .8s var(--ease-silk) forwards; }
+.wind-phrase.is-leaving .wind-phrase-text { animation: wind-out .6s var(--ease-silk) forwards; }
+.wind-phrase.is-done .wind-phrase-text { opacity: 0; }
+@keyframes wind-in { from { opacity: 0; transform: translateX(-40px) blur(8px); filter: blur(8px); } to { opacity: 1; transform: translateX(0); filter: blur(0); } }
+@keyframes wind-out { from { opacity: 1; transform: translateX(0); filter: blur(0); } to { opacity: 0; transform: translateX(140px) scale(.95); filter: blur(12px); } }
+.wind-pill-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.wind-pill { font-family: var(--font-sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.4); transition: all 300ms; }
+.wind-pill.active { border-color: rgba(255,255,255,.55); color: rgba(255,255,255,.85); background: rgba(255,255,255,.05); }
+.wind-hint { display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255,255,255,.3); }
+.wind-hint span { font-family: var(--font-sans); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; }
+.wind-hint-arrow { animation: wind-hint-bob 2s ease-in-out infinite; display: block; font-size: 14px; }
+@keyframes wind-hint-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+.wind-done-cta { display: flex; flex-direction: column; align-items: center; gap: 16px; animation: wind-in .9s var(--ease-silk) forwards; }
+.wind-done-cta h3 { font-family: var(--font-serif); font-size: clamp(1.4rem, 3vw, 2.2rem); font-style: italic; color: rgba(255,255,255,.85); margin: 0; }
+.wind-done-cta a { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); color: rgba(255,255,255,.8); font-family: var(--font-sans); font-size: 13px; font-weight: 500; text-decoration: none; transition: all 500ms var(--ease-silk); }
+.wind-done-cta a:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.65); color: #fff; }
+.wind-halo { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+.wind-halo--1 { width: 40rem; height: 40rem; top: -10%; right: -10%; background: radial-gradient(circle, oklch(0.5 0.18 245 / .25), transparent 70%); }
+.wind-halo--2 { width: 32rem; height: 32rem; bottom: 5%; left: -8%; background: radial-gradient(circle, oklch(0.38 0.16 295 / .2), transparent 70%); }
+
+/* ====== COLD REVEAL ("Quand le froid se révèle") ====== */
+.cold-reveal { position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 120px 24px; background: oklch(0.12 0.04 255); isolation: isolate; }
+.cold-reveal::before { content:""; position:absolute; inset:0; background: radial-gradient(ellipse 70% 60% at 50% 50%, oklch(0.22 0.08 250) 0%, oklch(0.08 0.03 260) 75%); z-index:-2; }
+.cold-grain { position: absolute; inset: 0; z-index: -1; opacity: .35; pointer-events: none;
+  background-image: radial-gradient(oklch(1 0 0 / .06) 1px, transparent 1px);
+  background-size: 3px 3px; mix-blend-mode: overlay; }
+.cold-halo { position: absolute; width: 44rem; height: 44rem; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: -1; }
+.cold-halo--ice { right: -10%; top: 10%; background: radial-gradient(circle, oklch(0.55 0.18 245 / .45), transparent 70%); }
+.cold-halo--meta { left: -14%; bottom: -10%; background: radial-gradient(circle, oklch(0.4 0.18 295 / .35), transparent 70%); }
+.cold-inner { position: relative; z-index: 1; max-width: 72rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+.cold-eyebrow { font-family: var(--font-sans); font-size: 11px; letter-spacing: .35em; text-transform: uppercase; color: rgba(255,255,255,.45); display: inline-flex; align-items: center; gap: 12px; }
+.cold-eyebrow .rule--inv { display:inline-block; width: 32px; height: 1px; background: rgba(255,255,255,.35); }
+.cold-title { font-family: var(--font-serif); font-weight: 500; font-size: clamp(3rem, 10vw, 8rem); line-height: .95; letter-spacing: -0.01em; margin: 0; color: #fff; }
+.cold-title .cold-line { display: block; }
+.cold-title .cold-line--italic { font-style: italic; font-weight: 400; color: rgba(255,255,255,.55); }
+.cold-lede { font-family: var(--font-sans); font-size: 15px; line-height: 1.75; color: rgba(255,255,255,.55); max-width: 38rem; margin: 8px auto 0; }
+.cold-scroll { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 32px; color: rgba(255,255,255,.4); text-decoration: none; transition: color 300ms; }
+.cold-scroll:hover { color: rgba(255,255,255,.8); }
+.cold-scroll-tick { display: block; width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent); }
+.cold-scroll-label { font-family: var(--font-sans); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; }
+
+/* ====== HERO ====== */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 96px 24px 0; }
+.hero-grain { position: absolute; inset: 0; z-index: -1; opacity: .7; pointer-events: none; }
+.hero-halo { position: absolute; width: 36rem; height: 36rem; border-radius: 50%; filter: blur(64px); pointer-events: none; z-index: -1; }
+.hero-halo--ice { right: -160px; top: 33%; background: linear-gradient(135deg, var(--ice-from), var(--ice-to)); opacity: .07; }
+.hero-halo--meta { left: -160px; bottom: 0; width: 28rem; height: 28rem; background: linear-gradient(135deg, var(--meta-from), var(--meta-to)); opacity: .08; }
+.hero-inner { max-width: 64rem; width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 32px; }
+.eyebrow { font-family: var(--font-sans); font-size: 12px; letter-spacing: .25em; text-transform: uppercase; color: color-mix(in oklab, var(--foreground) 60%, transparent); display:inline-flex; align-items:center; gap: 12px; }
+.eyebrow .rule { display:inline-block; width: 40px; height: 1px; background: color-mix(in oklab, var(--foreground) 40%, transparent); }
+.eyebrow.plain { color: color-mix(in oklab, var(--foreground) 50%, transparent); }
+.eyebrow.plain.inverse { color: color-mix(in oklab, var(--background) 55%, transparent); }
+.hero-title { font-family: var(--font-serif); font-weight: 500; font-size: clamp(2.75rem, 9vw, 7.5rem); line-height: .95; letter-spacing: -0.01em; margin: 0; color: var(--foreground); }
+.word { display: inline-block; margin-right: .25em; white-space: nowrap; }
+.hero-title .word { overflow: hidden; }
+.letter { display: inline-block; opacity: 0; transform: translateY(110%); animation: lift .9s var(--ease-silk) forwards; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .letter { opacity: 1; transform: none; animation: none; } .hero-sub, .hero-lede, .hero-ctas, .hero-scroll-hint { opacity: 1 !important; animation: none !important; transform: none !important; } }
+@keyframes lift { to { opacity: 1; transform: translateY(0); } }
+.hero-sub { display: block; font-style: italic; font-weight: 400; font-size: clamp(1.25rem, 3vw, 2rem); color: color-mix(in oklab, var(--foreground) 55%, transparent); margin-top: 6px; opacity: 0; animation: fadein 1.2s 1.4s forwards; }
+@keyframes fadein { to { opacity: 1; } }
+.hero-lede { max-width: 42rem; font-size: 17px; line-height: 1.7; color: color-mix(in oklab, var(--foreground) 75%, transparent); margin: 0; opacity: 0; transform: translateY(12px); animation: fadeup .8s 1.5s var(--ease-silk) forwards; }
+@keyframes fadeup { to { opacity: 1; transform: translateY(0); } }
+.hero-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding-top: 8px; opacity: 0; transform: translateY(12px); animation: fadeup .8s 1.7s var(--ease-silk) forwards; }
+.hero-scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: color-mix(in oklab, var(--foreground) 40%, transparent); opacity: 0; animation: fadein 1.2s 2s forwards; }
+
+/* ====== SECTION PRIMITIVES ====== */
+.section-head { margin-bottom: 72px; display: flex; flex-direction: column; gap: 24px; }
+.section-head.column { flex-direction: column; }
+.section-head.center { text-align: center; align-items: center; }
+@media (min-width: 768px) { .section-head:not(.column):not(.center) { flex-direction: row; align-items: flex-end; justify-content: space-between; } .section-head { margin-bottom: 96px; } }
+.section-title { font-family: var(--font-serif); font-weight: 500; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.01em; color: var(--foreground); margin: 16px 0 0; }
+.section-title.inverse { color: var(--background); margin-top: 16px; }
+.section-title em { font-style: italic; color: color-mix(in oklab, var(--foreground) 60%, transparent); }
+.section-title.inverse em { color: color-mix(in oklab, var(--background) 70%, transparent); }
+.section-lede { max-width: 28rem; color: color-mix(in oklab, var(--foreground) 70%, transparent); font-size: 16px; line-height: 1.7; margin: 0; }
+.section-lede.center { max-width: 36rem; margin: 0 auto; }
+
+/* ====== PILLARS ====== */
+.pillars { padding: 112px 24px; }
+@media (min-width: 768px) { .pillars { padding: 160px 24px; } }
+.pillars-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 768px) { .pillars-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+.pcard { position: relative; isolation: isolate; display: flex; flex-direction: column; min-height: 28rem; padding: 32px; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: var(--card); color: var(--card-foreground); box-shadow: inset 0 1px 0 oklch(1 0 0 / .6); transition: transform var(--dur-long) var(--ease-silk), box-shadow var(--dur-long) var(--ease-silk), border-color var(--dur-long), color var(--dur-long); }
+.pcard-bg { position: absolute; inset: 0; transform: translateY(100%); opacity: 0; transition: transform 700ms var(--ease-silk), opacity 700ms; z-index: 0; pointer-events:none; }
+.pcard > *:not(.pcard-bg) { position: relative; z-index: 1; }
+.pcard:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px oklch(0 0 0 / .25); border-color: transparent; color: #fff; }
+.pcard:hover .pcard-bg { transform: translateY(0); opacity: 1; }
+.pcard header { display:flex; align-items: flex-start; justify-content: space-between; margin-bottom: 32px; }
+.pcard-num { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: color-mix(in oklab, var(--foreground) 40%, transparent); transition: color 700ms; }
+.pcard:hover .pcard-num { color: rgba(255,255,255,.7); }
+.pcard-icon { display:grid; place-items:center; width: 44px; height: 44px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 15%, transparent); transition: transform 700ms var(--ease-silk), background 700ms, border-color 700ms; }
+.pcard:hover .pcard-icon { transform: rotate(12deg); background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.3); }
+.pcard-titles { display:flex; flex-direction: column; justify-content: flex-end; min-height: 7rem; margin-top: auto; }
+.pcard h3 { margin: 0; font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.75rem, 2.4vw, 2.25rem); line-height: 1.15; color: var(--foreground); transition: color 700ms; }
+.pcard:hover h3 { color: #fff; }
+.pcard-sub { font-family: var(--font-serif); font-style: italic; font-size: 15px; color: color-mix(in oklab, var(--foreground) 55%, transparent); margin: 6px 0 0; transition: color 700ms; }
+.pcard-body { font-size: 14.5px; line-height: 1.7; color: color-mix(in oklab, var(--foreground) 70%, transparent); margin-top: 24px; transition: color 700ms; }
+.pcard:hover .pcard-sub { color: rgba(255,255,255,.8); }
+.pcard:hover .pcard-body { color: rgba(255,255,255,.9); }
+
+/* ====== METHODOLOGY ====== */
+.method { padding: 112px 24px; background: color-mix(in oklab, var(--secondary) 40%, var(--background)); }
+@media (min-width: 768px) { .method { padding: 160px 24px; } }
+.method-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
+@media (min-width: 1024px) { .method-grid { grid-template-columns: 1.1fr .9fr; gap: 80px; } }
+.fields { position: relative; list-style: none; padding: 0 0 0 32px; border-left: 1px solid var(--border); margin: 0; display:flex; flex-direction: column; gap: 8px; }
+.fields li { position: relative; padding: 24px 0; }
+.field-dot { position: absolute; left: -37px; top: 32px; display: grid; place-items:center; width: 16px; height: 16px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 40%, transparent); background: var(--background); transition: all var(--dur-mid) var(--ease-silk); }
+.fields li:hover .field-dot { transform: scale(1.25); background: var(--foreground); border-color: var(--foreground); color: var(--background); }
+.field-head { display:flex; align-items: baseline; gap: 12px; }
+.fields h3 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.5rem, 2.2vw, 1.875rem); margin: 0; color: var(--foreground); }
+.fields p { max-width: 32rem; color: color-mix(in oklab, var(--foreground) 75%, transparent); font-size: 15px; line-height: 1.7; margin: 12px 0 0; }
+.posture { position: relative; display:flex; flex-direction: column; gap: 32px; border: 1px solid var(--border); background: var(--card); border-radius: 16px; padding: 40px; }
+.posture-title { font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.5rem, 2.2vw, 1.875rem); line-height: 1.15; color: var(--foreground); margin: 12px 0 0; }
+.posture-title em { font-style: italic; color: color-mix(in oklab, var(--foreground) 60%, transparent); }
+.posture blockquote { font-family: var(--font-serif); font-style: italic; font-size: clamp(1.25rem, 1.8vw, 1.5rem); line-height: 1.5; color: color-mix(in oklab, var(--foreground) 85%, transparent); margin: 0; }
+.posture-meta { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 14px; color: color-mix(in oklab, var(--foreground) 70%, transparent); }
+.posture-meta li { display: flex; flex-direction: column; gap: 4px; }
+.posture-meta strong { font-family: var(--font-serif); font-weight: 500; font-size: 17px; color: var(--foreground); }
+
+/* ====== TIMELINE ====== */
+.timeline { padding: 112px 24px; }
+@media (min-width: 768px) { .timeline { padding: 160px 24px; } }
+.timeline-wrap { position: relative; }
+.tline, .tline-filled { position: absolute; left: 16px; top: 0; bottom: 0; width: 1px; }
+.tline { background: var(--border); }
+.tline-filled { background: linear-gradient(to bottom, var(--ice-to), var(--ochre-from), var(--meta-to)); height: 70%; }
+@media (min-width: 768px) { .tline, .tline-filled { left: 50%; transform: translateX(-50%); } }
+.timeline ol { list-style: none; padding: 0; margin: 0; display:flex; flex-direction: column; gap: 64px; }
+@media (min-width: 768px) { .timeline ol { gap: 112px; } }
+.timeline li { position: relative; display: grid; grid-template-columns: 2.5rem 1fr; gap: 24px; }
+@media (min-width: 768px) { .timeline li { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.tdot { position: absolute; left: 16px; top: 10px; transform: translateX(-50%); display: grid; place-items:center; width: 36px; height: 36px; border-radius: 999px; background: var(--background); border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); transition: all var(--dur-mid) var(--ease-silk); z-index: 2; color: var(--foreground); }
+@media (min-width: 768px) { .tdot { left: 50%; } }
+.timeline li:hover .tdot { transform: translateX(-50%) scale(1.1); background: var(--foreground); color: var(--background); border-color: var(--foreground); }
+.tyear, .tbody { padding-left: 48px; }
+@media (min-width: 768px) { .tyear { padding: 0 48px 0 0; text-align: right; } .tbody { padding: 0 0 0 48px; } .timeline li.right .tyear { order: 2; padding: 0 0 0 48px; text-align: left; } .timeline li.right .tbody { order: 1; text-align: right; padding: 0 48px 0 0; } }
+.year { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 48px; color: color-mix(in oklab, var(--foreground) 30%, transparent); }
+.tbody h3 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.5rem, 2.2vw, 1.875rem); line-height: 1.15; color: var(--foreground); margin: 0; }
+.concept { font-family: var(--font-serif); font-style: italic; font-size: 16px; color: color-mix(in oklab, var(--foreground) 55%, transparent); margin: 8px 0 0; }
+.tbody .body { color: color-mix(in oklab, var(--foreground) 75%, transparent); font-size: 15px; line-height: 1.7; margin-top: 16px; }
+
+/* ====== FUNDING ====== */
+.funding { padding: 112px 24px; }
+@media (min-width: 768px) { .funding { padding: 160px 24px; } }
+.funding-block { position: relative; overflow: hidden; border-radius: 24px; border: 2px solid color-mix(in oklab, var(--foreground) 90%, transparent); background: var(--foreground); color: var(--background); padding: 40px; max-width: 72rem; margin: 0 auto; }
+@media (min-width: 768px) { .funding-block { padding: 64px; } }
+.fund-halo { position: absolute; width: 28rem; height: 28rem; border-radius: 50%; filter: blur(64px); pointer-events:none; opacity: .1; }
+.fund-halo--ochre { right: -128px; top: -128px; background: var(--ochre-to); }
+.fund-halo--ice { left: -128px; bottom: -160px; background: var(--ice-to); }
+.funding-grid { position: relative; display: grid; grid-template-columns: 1fr; gap: 48px; }
+@media (min-width: 768px) { .funding-grid { grid-template-columns: 1fr .9fr; gap: 64px; } }
+.funding-lede { max-width: 34rem; color: color-mix(in oklab, var(--background) 75%, transparent); font-size: 15px; line-height: 1.7; margin: 24px 0 0; }
+.funding-lede strong { color: var(--background); font-weight: 600; }
+.funding-ctas { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; align-items: center; }
+.fund-cards { list-style: none; padding: 0; margin: 0; display:flex; flex-direction: column; gap: 20px; align-self: center; }
+.fund-cards li { display:flex; gap: 16px; padding: 20px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--background) 15%, transparent); background: color-mix(in oklab, var(--background) 4%, transparent); backdrop-filter: blur(4px); }
+.fund-ic { flex-shrink: 0; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 999px; background: color-mix(in oklab, var(--background) 10%, transparent); }
+.fund-cards h3 { font-family: var(--font-serif); font-weight: 500; font-size: 18px; margin: 0; color: var(--background); }
+.fund-cards p { margin: 6px 0 0; font-size: 14px; line-height: 1.6; color: color-mix(in oklab, var(--background) 70%, transparent); }
+
+/* ====== FOOTER ====== */
+.site-footer { border-top: 1px solid var(--border); background: color-mix(in oklab, var(--secondary) 30%, var(--background)); padding: 96px 24px 40px; }
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 64px; }
+@media (min-width: 768px) { .footer-grid { grid-template-columns: 1.2fr 1fr; gap: 96px; } }
+.footer-mail { display:inline-flex; align-items: center; gap: 12px; margin-top: 32px; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.5rem, 2.4vw, 1.875rem); color: var(--foreground); text-decoration: none; transition: all var(--dur-mid); }
+.footer-mail span { border-bottom: 1px solid color-mix(in oklab, var(--foreground) 40%, transparent); padding-bottom: 4px; transition: border-color var(--dur-mid); }
+.footer-mail:hover span { border-color: var(--foreground); }
+.footer-meta { display:flex; flex-direction: column; gap: 32px; }
+.footer-meta ul { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 12px; }
+.footer-meta li a { display:inline-flex; align-items:center; gap: 12px; color: color-mix(in oklab, var(--foreground) 80%, transparent); text-decoration: none; transition: color var(--dur-mid); font-size: 14px; }
+.footer-meta li a:hover { color: var(--foreground); }
+.aff { font-family: var(--font-serif); font-size: 18px; color: var(--foreground); margin: 16px 0 0; }
+.aff-sub { margin: 4px 0 0; font-size: 13px; color: color-mix(in oklab, var(--foreground) 60%, transparent); }
+.footer-end { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border); display:flex; flex-direction: column; gap: 24px; align-items: flex-start; justify-content: space-between; font-size: 12px; color: color-mix(in oklab, var(--foreground) 50%, transparent); }
+@media (min-width: 768px) { .footer-end { flex-direction: row; align-items: center; } }
+.back-top { display:inline-flex; align-items:center; gap: 10px; font-size: 12px; letter-spacing: .25em; text-transform: uppercase; color: color-mix(in oklab, var(--foreground) 60%, transparent); text-decoration: none; transition: color var(--dur-mid); }
+.back-top:hover { color: var(--foreground); }
+.back-ic { display: grid; place-items:center; width: 32px; height: 32px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); transition: all var(--dur-mid) var(--ease-silk); }
+.back-top:hover .back-ic { transform: translateY(-4px); background: var(--foreground); color: var(--background); border-color: var(--foreground); }
+
+</style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    window.THREE = THREE;
+    window.dispatchEvent(new Event('three-ready'));
+  </script>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel">
+
+// ==== icons.jsx ====
+// Shared icons (Lucide-like, stroked 1.6)
+const I = {};
+const mk = (d, extra) => (p) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={p?.sw ?? 1.7} strokeLinecap="round" strokeLinejoin="round" width={p?.s ?? 18} height={p?.s ?? 18} style={p?.style}>{d}{extra}</svg>
+);
+I.ArrowDown = mk(<><path d="M12 5v14"/><path d="M5 12l7 7 7-7"/></>);
+I.ArrowUp   = mk(<><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></>);
+I.Download  = mk(<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></>);
+I.Mail      = mk(<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></>);
+I.Menu      = mk(<><path d="M3 6h18M3 12h18M3 18h18"/></>);
+I.X         = mk(<><path d="M18 6L6 18M6 6l12 12"/></>);
+I.Cog       = mk(<><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10 3.09V3a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c0 .53.26 1 .66 1.31"/></>);
+I.Coins     = mk(<><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="M16.71 13.88l.7.71-2.82 2.82"/></>);
+I.Sparkles  = mk(<><path d="M12 3l1.9 4.9L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-2.1L12 3z"/><path d="M5 18l.7 1.8L7.5 20l-1.8.7L5 22l-.7-1.3L2.5 20l1.8-.2L5 18z"/></>);
+I.MapPin    = mk(<><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></>);
+I.Quote     = mk(<><path d="M7 11H4V8a4 4 0 0 1 4-4"/><path d="M17 11h-3V8a4 4 0 0 1 4-4"/><path d="M4 11v5a2 2 0 0 0 2 2h1"/><path d="M14 11v5a2 2 0 0 0 2 2h1"/></>);
+I.Wifi      = mk(<><path d="M5 12a10 10 0 0 1 14 0"/><path d="M8.5 15a5 5 0 0 1 7 0"/><circle cx="12" cy="18" r="1"/></>);
+I.Flower    = mk(<><circle cx="12" cy="12" r="2"/><path d="M12 10V6a2 2 0 1 1 4 2 2 2 0 1 1-2 4"/><path d="M12 14v4a2 2 0 1 1-4-2 2 2 0 1 1 2-4"/><path d="M10 12H6a2 2 0 1 1 2-4 2 2 0 1 1 4 2"/><path d="M14 12h4a2 2 0 1 1-2 4 2 2 0 1 1-4-2"/></>);
+I.Snow      = mk(<><path d="M2 12h3M19 12h3M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1M12 8v8M8 12h8"/></>);
+I.Cap       = mk(<><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></>);
+I.Factory   = mk(<><path d="M2 20h20V9l-6 4V9l-6 4V4H4l-2 5z"/><path d="M7 20v-5M12 20v-5M17 20v-5"/></>);
+I.Linkedin  = mk(<><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 11v6M8 8v.01M12 17v-4M16 17v-3a2 2 0 0 0-4 0"/></>);
+I.Book      = mk(<><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h8M8 11h6"/></>);
+I.Finger    = mk(<><path d="M12 11c0-3 2-5 5-5"/><path d="M8 11c0-2 2-5 5-5"/><path d="M7 15c.5-2 1-3 2-4"/><path d="M9 19c1-2 1-4 2-6"/><path d="M13 21c.5-3 2-5 2-8"/></>);
+
+window.I = I;
+
+
+// ==== Nav.jsx ====
+function Nav() {
+  const [scrolled, setScrolled] = React.useState(false);
+  const [onDark, setOnDark] = React.useState(false);
+  React.useEffect(() => {
+    const on = () => {
+      setScrolled(window.scrollY > 24);
+      const cold = document.getElementById('fonte');
+      if (cold) {
+        const r = cold.getBoundingClientRect();
+        setOnDark(r.top <= 80 && r.bottom >= 80);
+      }
+    };
+    on(); window.addEventListener('scroll', on, {passive:true});
+    return () => window.removeEventListener('scroll', on);
+  }, []);
+  const links = [
+    { href: '#projet', label: 'Le Projet' },
+    { href: '#methodologie', label: 'Méthodologie' },
+    { href: '#fil', label: 'Fil conducteur' },
+    { href: '#financement', label: 'CIFRE' },
+    { href: '#contact', label: 'Contact' },
+  ];
+  return (
+    <header className={`site-nav ${scrolled ? 'scrolled':''} ${onDark ? 'on-dark':''}`}>
+      <nav>
+        <a href="#hero" className="brand">Météorologie<span className="dot"> · </span>du goût</a>
+        <ul>
+          {links.map(l => <li key={l.href}><a href={l.href} className="navlink">{l.label}</a></li>)}
+          <li><a href="#" className="pill-pdf"><I.Download s={13}/>PDF</a></li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+window.Nav = Nav;
+
+
+// ==== Hero.jsx ====
+function Hero() {
+  const title = "Météorologie du goût";
+  return (
+    <section id="hero" className="hero">
+      <div className="grain-texture hero-grain" aria-hidden />
+      <div className="hero-halo hero-halo--ice" aria-hidden />
+      <div className="hero-halo hero-halo--meta" aria-hidden />
+
+      <div className="hero-inner">
+        <span className="eyebrow">
+          <span className="rule" /> Projet de thèse · EHESS · 2026
+        </span>
+
+        <h1 className="hero-title">
+          {title.split(' ').map((word, wi) => (
+            <span key={wi} className="word">
+              {word.split('').map((ch, ci) => (
+                <span key={ci} className="letter" style={{ animationDelay: `${0.25 + (wi*5 + ci)*0.035}s` }}>{ch}</span>
+              ))}
+            </span>
+          ))}
+          <em className="hero-sub">— une anthropologie de la glace, du froid et du bonheur</em>
+        </h1>
+
+        <p className="hero-lede">
+          Suivre la trace d'un sorbet jusqu'à ses ateliers, ses ouvriers, ses récits intimes. Décrire comment le froid devient une matière sociale, économique, presque métaphysique — et ce que mangent, en silence, ceux qui en goûtent.
+        </p>
+
+        <div className="hero-ctas">
+          <a href="#projet" className="btn-primary">
+            <span className="bg-meta" />
+            <span className="label">Découvrir le projet</span>
+            <I.ArrowDown s={16}/>
+          </a>
+          <a href="#" className="btn-link"><I.Download s={14}/> Télécharger le projet (PDF)</a>
+          <a href="#contact" className="btn-link">Prendre contact →</a>
+        </div>
+      </div>
+
+      <div className="hero-scroll-hint">Défiler</div>
+    </section>
+  );
+}
+window.Hero = Hero;
+
+
+// ==== Pillars.jsx ====
+const PILLARS = [
+  { id:'technique', num:'01', title:'Technique', sub:"Le froid comme savoir-faire",
+    body:"Saisir les gestes de l'artisan glacier : la maîtrise des cristaux, la lente acclimatation des sucres, la chimie patiente du froid. Décrire comment un savoir corporel se transmet, se standardise, ou résiste à l'industrie.",
+    icon: 'Cog', gradient:'gradient-ice' },
+  { id:'economie', num:'02', title:'Économie & Social', sub:"Une économie morale du plaisir",
+    body:"Cartographier les circuits — du producteur de pistache de Bronte au stand d'une fête de village. Comprendre comment se négocient les valeurs : prix, prestige, authenticité, et la place du don dans une marchandise qui fond.",
+    icon:'Coins', gradient:'gradient-ochre' },
+  { id:'metaphysique', num:'03', title:'Métaphysique & Sensoriel', sub:"Ce que le goût pense en nous",
+    body:"Suivre la glace au seuil de l'indicible : l'enfance qui revient, la mémoire qui fond sur la langue, le bonheur bref et sans raison. Une anthropologie des affects positifs, des micro-extases du quotidien.",
+    icon:'Sparkles', gradient:'gradient-meta' },
+];
+
+function Pillars() {
+  return (
+    <section id="projet" className="pillars">
+      <div className="container">
+        <header className="section-head">
+          <div>
+            <span className="eyebrow plain">§ I — Le projet</span>
+            <h2 className="section-title">Trois entrées <em>dans une même matière</em></h2>
+          </div>
+          <p className="section-lede">La glace se laisse interroger sur trois plans qui ne se séparent jamais vraiment. Cette recherche les tient ensemble.</p>
+        </header>
+        <div className="pillars-grid">
+          {PILLARS.map((p) => {
+            const Icon = I[p.icon];
+            return (
+              <article key={p.id} className="pcard">
+                <span className={`pcard-bg ${p.gradient}`} aria-hidden />
+                <header>
+                  <span className="pcard-num">{p.num} / 03</span>
+                  <span className="pcard-icon"><Icon s={20}/></span>
+                </header>
+                <div className="pcard-titles">
+                  <h3>{p.title}</h3>
+                  <p className="pcard-sub">{p.sub}</p>
+                </div>
+                <p className="pcard-body">{p.body}</p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+window.Pillars = Pillars;
+
+
+// ==== Methodology.jsx ====
+const FIELDS = [
+  { place:'France', region:'Paris · Lyon · Sud-Ouest', note:"Ateliers urbains, glaciers de quartier et marchés de producteurs. Terrain d'origine, observation continue depuis 2023." },
+  { place:'Italie', region:'Sicile · Émilie-Romagne', note:"Berceau du gelato artisanal. Suivi de filières (pistache de Bronte, lait de Modène) et apprentissage technique." },
+  { place:'Brésil', region:'Belém · Bahia', note:"Sorvetes amazoniens, fruits oubliés, économies informelles. Pendant tropical et politique de l'enquête." },
+];
+
+function Methodology() {
+  return (
+    <section id="methodologie" className="method">
+      <div className="container">
+        <header className="section-head column">
+          <span className="eyebrow plain">§ II — Méthodologie &amp; Terrain</span>
+          <h2 className="section-title">Trois pays, <em>un seul geste d'enquête</em></h2>
+        </header>
+
+        <div className="method-grid">
+          <ol className="fields">
+            {FIELDS.map((f) => (
+              <li key={f.place}>
+                <span className="field-dot"><I.MapPin s={11}/></span>
+                <div className="field-head">
+                  <h3>{f.place}</h3>
+                  <span className="eyebrow plain">{f.region}</span>
+                </div>
+                <p>{f.note}</p>
+              </li>
+            ))}
+          </ol>
+
+          <aside className="posture">
+            <I.Quote s={46} sw={1} style={{ position:'absolute', left:-12, top:-12, transform:'rotate(-12deg)', color:'color-mix(in oklab, var(--foreground) 10%, transparent)'}}/>
+            <div>
+              <span className="eyebrow plain">Posture</span>
+              <h3 className="posture-title">Observation participante <em>radicale</em></h3>
+            </div>
+            <blockquote>
+              « Apprendre le métier avant d'apprendre à en parler. Plonger les mains dans la sorbetière, sentir le sucre brûler, et seulement alors, écouter ce que le froid a à nous dire. »
+            </blockquote>
+            <ul className="posture-meta">
+              <li><span className="eyebrow plain">Durée prévue</span><strong>36 mois</strong></li>
+              <li><span className="eyebrow plain">Méthode</span><strong>Ethnographie longue</strong></li>
+              <li><span className="eyebrow plain">Corpus</span><strong>Carnets · Sons</strong></li>
+              <li><span className="eyebrow plain">Discipline</span><strong>Anthropologie</strong></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+  );
+}
+window.Methodology = Methodology;
+
+
+// ==== Timeline.jsx ====
+const STEPS = [
+  { year:'2019', place:'Cybercafé · banlieue parisienne', title:'Les communautés de joueurs en ligne', concept:'Camaraderies fluorescentes',
+    body:"Premier terrain de Master 1. Décrire des solidarités tissées par l'écran, des micro-célébrations entre pixels, et déjà : la question des affects positifs comme objet anthropologique légitime.", icon:'Wifi' },
+  { year:'2022', place:'Cimetière de campagne', title:'Économies du souvenir et travail funéraire', concept:'Joies discrètes du deuil',
+    body:"Mémoire de Master 2. Comment, au cœur même du chagrin, surgissent rires, gourmandises partagées, gestes tendres. Le bonheur ne s'oppose pas à la peine — il y travaille.", icon:'Flower' },
+  { year:'2026', place:'Ateliers glaciers · trois pays', title:'Météorologie du goût', concept:'Climat intime du plaisir',
+    body:"Projet de thèse. Le froid comme nouveau prisme pour interroger la même question depuis sept ans : où, comment, par quels gestes minuscules, un humain s'autorise-t-il à être simplement heureux ?", icon:'Snow' },
+];
+
+function Timeline() {
+  return (
+    <section id="fil" className="timeline">
+      <div className="container narrow">
+        <header className="section-head center">
+          <span className="eyebrow plain">§ III — Fil conducteur</span>
+          <h2 className="section-title">Une anthropologie <em>du bonheur</em></h2>
+          <p className="section-lede center">Trois terrains apparemment hétéroclites — un cybercafé, un cimetière, un atelier glacier. Une même obsession : comprendre ce que les humains font de leurs joies.</p>
+        </header>
+
+        <div className="timeline-wrap">
+          <span className="tline" aria-hidden />
+          <span className="tline-filled" aria-hidden />
+          <ol>
+            {STEPS.map((s, i) => {
+              const Icon = I[s.icon];
+              const left = i % 2 === 0;
+              return (
+                <li key={s.year} className={left ? 'left':'right'}>
+                  <span className="tdot"><Icon s={15}/></span>
+                  <div className="tyear">
+                    <span className="year">{s.year}</span>
+                    <p className="eyebrow plain">{s.place}</p>
+                  </div>
+                  <div className="tbody">
+                    <h3>{s.title}</h3>
+                    <p className="concept">« {s.concept} »</p>
+                    <p className="body">{s.body}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+window.Timeline = Timeline;
+
+
+// ==== Funding.jsx ====
+function Funding() {
+  return (
+    <section id="financement" className="funding">
+      <div className="container">
+        <div className="funding-block">
+          <span className="fund-halo fund-halo--ochre" aria-hidden/>
+          <span className="fund-halo fund-halo--ice" aria-hidden/>
+          <div className="funding-grid">
+            <div>
+              <span className="eyebrow plain inverse">§ IV — Financement &amp; CIFRE</span>
+              <h2 className="section-title inverse">Un projet en quête <em>d'une co-production</em></h2>
+              <p className="funding-lede">
+                Cette thèse cherche un financement contractuel, idéalement par convention <strong>CIFRE</strong> (ANRT). L'enquête peut s'adosser à un partenaire industriel ou artisanal du secteur du froid alimentaire, gastronomique, ou de la restauration premium — pour qui un regard ethnographique long sur la fabrique, la chaîne et la consommation constitue un levier stratégique.
+              </p>
+              <div className="funding-ctas">
+                <a href="#" className="btn-primary inverse">
+                  <span className="bg-ochre"/>
+                  <I.Download s={14}/>
+                  <span className="label">Télécharger le dossier (PDF)</span>
+                </a>
+                <a href="#contact" className="btn-ghost inverse"><I.Mail s={14}/> Me contacter</a>
+              </div>
+            </div>
+
+            <ul className="fund-cards">
+              <li>
+                <span className="fund-ic"><I.Cap s={18}/></span>
+                <div>
+                  <h3>Pour un laboratoire</h3>
+                  <p>Inscription EHESS visée, direction de thèse à confirmer. Bourses publiques, contrats doctoraux, co-tutelles internationales bienvenus.</p>
+                </div>
+              </li>
+              <li>
+                <span className="fund-ic"><I.Factory s={18}/></span>
+                <div>
+                  <h3>Pour une entreprise</h3>
+                  <p>Convention CIFRE : 36 mois d'immersion, restitutions régulières, livrables confidentiels possibles. Crédit d'impôt recherche associé.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+window.Funding = Funding;
+
+
+// ==== Footer.jsx ====
+function Footer() {
+  const profiles = [
+    { icon:'Linkedin', label:'LinkedIn' },
+    { icon:'Book', label:'Academia.edu' },
+    { icon:'Finger', label:'ORCID' },
+  ];
+  return (
+    <footer id="contact" className="site-footer">
+      <div className="container">
+        <div className="footer-grid">
+          <div>
+            <span className="eyebrow plain">Contact</span>
+            <h2 className="section-title">Écrivons-nous.</h2>
+            <p className="section-lede">Pour une direction de thèse, une discussion académique, une opportunité CIFRE ou simplement pour parler de glace, de cinéma, de bonheur.</p>
+            <a className="footer-mail" href="mailto:contact@meteorologiedugout.fr">
+              <I.Mail s={22}/> <span>contact@meteorologiedugout.fr</span>
+            </a>
+          </div>
+          <div className="footer-meta">
+            <div>
+              <span className="eyebrow plain">Profils</span>
+              <ul>
+                {profiles.map((p) => { const Ic = I[p.icon]; return (
+                  <li key={p.label}><a href="#"><Ic s={14}/> <span>{p.label}</span></a></li>
+                );})}
+              </ul>
+            </div>
+            <div>
+              <span className="eyebrow plain">Affiliation</span>
+              <p className="aff">EHESS — Master 2 d'Anthropologie sociale et ethnologie</p>
+              <p className="aff-sub">Candidature de thèse · rentrée 2026</p>
+            </div>
+          </div>
+        </div>
+        <div className="footer-end">
+          <span>© {new Date().getFullYear()} — Météorologie du goût. Tous droits réservés.</span>
+          <a href="#hero" className="back-top">Retour en haut <span className="back-ic"><I.ArrowUp s={13}/></span></a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+window.Footer = Footer;
+
+
+// ==== Splash.jsx ====
+const THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
+
+const CONE_POS_Y  = -1.28;
+const CONE_HEIGHT = 2.1;
+const CONE_TOP_R  = 0.68;
+const CONE_TOP_Y  = CONE_POS_Y + CONE_HEIGHT / 2;
+const CONE_TIP_Y  = CONE_POS_Y - CONE_HEIGHT / 2;
+
+const STREAMS = [
+  { angle: 0.18,  startMelt: 0.06, yOffset: -0.10 },
+  { angle: 1.10,  startMelt: 0.08, yOffset: -0.15 },
+  { angle: 2.10,  startMelt: 0.09, yOffset: -0.08 },
+  { angle: 3.20,  startMelt: 0.10, yOffset: -0.20 },
+  { angle: 4.20,  startMelt: 0.12, yOffset: -0.12 },
+  { angle: 5.20,  startMelt: 0.14, yOffset: -0.06 },
+  { angle: 0.65,  startMelt: 0.20, yOffset:  0.10 },
+  { angle: 3.80,  startMelt: 0.24, yOffset:  0.08 },
+];
+
+function outerRadius(y, scoopR, scoopY) {
+  const dy = y - scoopY;
+  const rScoop = Math.abs(dy) < scoopR ? Math.sqrt(Math.max(0, scoopR*scoopR - dy*dy)) : 0;
+  const rCone  = y <= CONE_TOP_Y && y >= CONE_TIP_Y
+    ? CONE_TOP_R * ((y - CONE_TIP_Y) / (CONE_TOP_Y - CONE_TIP_Y))
+    : 0;
+  return Math.max(rScoop, rCone, 0.01);
+}
+
+function IceCream3D({ melt }) {
+  const mountRef = React.useRef(null);
+  const stateRef = React.useRef({ currentMelt: 0, render: null });
+
+  React.useEffect(() => {
+    let disposed = false;
+    let cleanup = null;
+    const init = () => {
+      const THREE = window.THREE;
+      if (!THREE || disposed || !mountRef.current) return;
+      const mount = mountRef.current;
+      const width = mount.clientWidth || 400;
+      const height = mount.clientHeight || 400;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(36, width/height, 0.1, 100);
+      camera.position.set(0, 0.2, 5.8);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(width, height);
+      renderer.setClearColor(0x000000, 0);
+      mount.appendChild(renderer.domElement);
+      scene.add(new THREE.AmbientLight(0xc8d8f0, 0.4));
+      const dir = new THREE.DirectionalLight(0xfff8f0, 1.3); dir.position.set(3, 6, 4); scene.add(dir);
+      const p1 = new THREE.PointLight(0x7aaeff, 0.5); p1.position.set(-5, 2, 1); scene.add(p1);
+      const p2 = new THREE.PointLight(0xffcf90, 0.28); p2.position.set(0, -4, 3); scene.add(p2);
+      const group = new THREE.Group(); scene.add(group);
+      const coneGeo = new THREE.ConeGeometry(CONE_TOP_R, CONE_HEIGHT, 6);
+      const coneMat = new THREE.MeshStandardMaterial({ color: 0xC49165, roughness: 0.80, metalness: 0.04 });
+      const cone = new THREE.Mesh(coneGeo, coneMat);
+      cone.rotation.x = Math.PI; cone.position.y = CONE_POS_Y; group.add(cone);
+      const waffleGeo = new THREE.ConeGeometry(CONE_TOP_R + 0.014, CONE_HEIGHT + 0.02, 6);
+      const waffleMat = new THREE.MeshStandardMaterial({ color: 0x8A5E28, transparent: true, opacity: 0.28, wireframe: true });
+      const waffle = new THREE.Mesh(waffleGeo, waffleMat);
+      waffle.rotation.x = Math.PI; waffle.position.y = CONE_POS_Y; group.add(waffle);
+      const scoopGeo = new THREE.SphereGeometry(1, 40, 40);
+      const scoopMat = new THREE.MeshStandardMaterial({ color: 0xEDE2CF, roughness: 0.48, metalness: 0 });
+      const scoop = new THREE.Mesh(scoopGeo, scoopMat); group.add(scoop);
+      // Remplissage crème à l'intérieur du cornet
+      const fillMat = new THREE.MeshStandardMaterial({ color: 0xEDE2CF, roughness: 0.5, metalness: 0 });
+      const fill = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.01, 16), fillMat);
+      fill.visible = false; fill.position.y = CONE_TIP_Y; group.add(fill);
+      const streamMat = new THREE.MeshStandardMaterial({ color: 0xEDE2CF, roughness: 0.38 });
+      const streams = STREAMS.map(() => {
+        const m = new THREE.Mesh(new THREE.BufferGeometry(), streamMat);
+        m.visible = false; group.add(m); return m;
+      });
+      const mouse = { x: 0, y: 0 };
+      const onMove = (e) => {
+        mouse.x = (e.clientX / window.innerWidth  - 0.5) * Math.PI * 0.65;
+        mouse.y = (e.clientY / window.innerHeight - 0.5) * Math.PI * 0.22;
+      };
+      window.addEventListener('mousemove', onMove);
+      const rot = { x: 0.1, y: 0 };
+      let raf = 0;
+      const onResize = () => {
+        const w = mount.clientWidth, h = mount.clientHeight;
+        if (!w || !h) return;
+        renderer.setSize(w, h);
+        camera.aspect = w/h; camera.updateProjectionMatrix();
+      };
+      const ro = new ResizeObserver(onResize); ro.observe(mount);
+      stateRef.current.render = (currentMelt) => {
+        const m = Math.min(1, currentMelt);
+        // Descente douce et continue — pas de squash brutal
+        const scaleXZ = 0.82 * (1 + m * 0.18);          // s'élargit légèrement
+        const scaleY  = 0.82 * Math.max(0.25, 1 - m * 0.60); // s'aplatit doucement
+        const scoopY  = 0.2 - m * 0.62;                  // descend dans le cornet
+        scoop.scale.set(scaleXZ, scaleY, scaleXZ);
+        scoop.position.y = scoopY;
+        scoop.visible = true; // toujours visible — c'est la crème qui reste
+        scoopMat.roughness = Math.max(0.05, 0.48 - m * 0.43);
+        // Remplissage crème dans le cornet (démarre tôt)
+        const fp = Math.min(1, Math.max(0, (m - 0.1) / 0.9));
+        if (fp > 0.01) {
+          const fh = fp * CONE_HEIGHT * 0.98;
+          const fTopR = CONE_TOP_R * Math.min(1, fp * 1.1) * 0.90;
+          fill.geometry.dispose();
+          fill.geometry = new THREE.CylinderGeometry(fTopR, 0.02, fh, 16);
+          fill.position.y = CONE_TIP_Y + fh / 2;
+          fill.visible = true;
+        } else { fill.visible = false; }
+        // Filets avec zigzag (wobble latéral)
+        const effectiveR = scaleXZ;
+        STREAMS.forEach((s, i) => {
+          const progress = Math.max(0, (m - s.startMelt) / 0.45);
+          const mesh = streams[i];
+          if (progress <= 0) { mesh.visible = false; return; }
+          const startY = scoopY + s.yOffset * Math.max(0.2, scaleY / 0.82);
+          const flowLen = Math.min(progress, 1) * 1.8;
+          const N = 32; const pts = [];
+          const perpAngle = s.angle + Math.PI / 2;
+          for (let k = 0; k <= N; k++) {
+            const t = k / N;
+            const y = startY - t * flowLen;
+            const r = outerRadius(y, effectiveR, scoopY) + 0.008;
+            // Zigzag sinusoïdal perpendiculaire au filet
+            const wobble = 0.038 * Math.sin(t * Math.PI * 3.2 + s.angle * 1.7);
+            pts.push(new THREE.Vector3(
+              Math.cos(s.angle)*r + Math.cos(perpAngle)*wobble,
+              y,
+              Math.sin(s.angle)*r + Math.sin(perpAngle)*wobble
+            ));
+          }
+          const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.5);
+          const tubeRadius = 0.028 + Math.min(progress,1) * 0.018; // épais et crémeux
+          const tube = new THREE.TubeGeometry(curve, N, tubeRadius, 8, false);
+          mesh.geometry.dispose(); mesh.geometry = tube; mesh.visible = true;
+        });
+      };
+      const loop = () => {
+        rot.y += (mouse.x - rot.y) * 0.055;
+        rot.x += (mouse.y - rot.x) * 0.055;
+        group.rotation.y = rot.y;
+        group.rotation.x = rot.x;
+        if (stateRef.current.render) stateRef.current.render(stateRef.current.currentMelt || 0);
+        renderer.render(scene, camera);
+        raf = requestAnimationFrame(loop);
+      };
+      loop();
+      cleanup = () => {
+        cancelAnimationFrame(raf);
+        window.removeEventListener('mousemove', onMove);
+        ro.disconnect();
+        renderer.dispose();
+        coneGeo.dispose(); coneMat.dispose();
+        waffleGeo.dispose(); waffleMat.dispose();
+        scoopGeo.dispose(); scoopMat.dispose();
+        streamMat.dispose();
+        streams.forEach(m => m.geometry && m.geometry.dispose());
+        if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement);
+      };
+    };
+    if (window.THREE) { init(); }
+    else {
+      const onReady = () => init();
+      window.addEventListener('three-ready', onReady, { once: true });
+      cleanup = () => window.removeEventListener('three-ready', onReady);
+    }
+    return () => { disposed = true; if (cleanup) cleanup(); };
+  }, []);
+
+  React.useEffect(() => {
+    if (stateRef.current) stateRef.current.currentMelt = melt;
+  }, [melt]);
+
+  return <div ref={mountRef} className="icecream3d" />;
+}
+window.IceCream3D = IceCream3D;
+
+function Splash({ onEnter }) {
+  const [visible, setVisible] = React.useState(true);
+  const [leaving, setLeaving] = React.useState(false);
+  const [melt, setMelt] = React.useState(0);
+  const [seconds, setSeconds] = React.useState(0);
+  const meltIntervalRef = React.useRef(null);
+
+  // Toujours afficher le splash (prototype — pas de persistance sessionStorage)
+  React.useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  // Slow melt timer
+  React.useEffect(() => {
+    if (!visible) return;
+    meltIntervalRef.current = setInterval(() => {
+      setMelt(m => Math.min(1, m + 0.0009));
+    }, 100);
+    return () => clearInterval(meltIntervalRef.current);
+  }, [visible]);
+
+  // Seconds counter
+  React.useEffect(() => {
+    if (!visible) return;
+    const id = setInterval(() => setSeconds(s => s + 1), 1000);
+    return () => clearInterval(id);
+  }, [visible]);
+
+  // Fast melt on enter — glace disparaît entièrement puis fade
+  const enter = React.useCallback(() => {
+    if (leaving) return;
+    clearInterval(meltIntervalRef.current);
+    try { sessionStorage.removeItem('mdg_splash_seen'); } catch {}
+    let done = false;
+    const fastId = setInterval(() => {
+      setMelt(m => {
+        const next = Math.min(1, m + 0.07);
+        if (next >= 1 && !done) {
+          done = true;
+          clearInterval(fastId);
+          // Petit temps d'attente après disparition, puis fade out
+          setTimeout(() => {
+            setLeaving(true);
+            setTimeout(() => {
+              setVisible(false);
+              document.body.style.overflow = '';
+              onEnter && onEnter();
+            }, 950);
+          }, 350);
+        }
+        return next;
+      });
+    }, 40);
+  }, [leaving, onEnter]);
+
+  // Auto-fonte à 30 secondes
+  React.useEffect(() => {
+    if (seconds === 30 && visible && !leaving) enter();
+  }, [seconds]);
+
+  // Touche Entrée
+  React.useEffect(() => {
+    if (!visible) return;
+    const onKey = (e) => { if (e.key === 'Enter') enter(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [visible, enter]);
+
+  if (!visible) return null;
+
+  const s = seconds;
+  // Fond qui passe du bleu nuit au rouge-orange au fil du melt
+  const bgHue = Math.round(255 - melt * 225);
+  const bgChroma = (0.02 + melt * 0.07).toFixed(3);
+  const bgStyle = { backgroundColor: `oklch(0.09 ${bgChroma} ${bgHue})` };
+
+  const timerLabel = s === 0 ? 'La glace fond…' : `La glace fond depuis ${s} seconde${s > 1 ? 's' : ''}`;
+
+  return (
+    <div className={`splash ${leaving ? 'splash--leaving' : ''}`} role="dialog" aria-label="Introduction" style={bgStyle}>
+      <div className="splash-bg" aria-hidden>
+        <div className="blob blob--ice" />
+        <div className="blob blob--meta" />
+        <div className="spotlight" />
+        <div className="vignette" />
+      </div>
+      {/* Arrière-plan */}
+
+      {/* En-tête */}
+      <div className="splash-top">
+        <span className="splash-kicker">Météorologie du goût <span className="sep">—</span> EHESS <span className="sep">·</span> 2026</span>
+      </div>
+
+      {/* Zone centrale */}
+      <div className="splash-center">
+        <blockquote className="splash-quote">
+          <p>
+            «&nbsp;La glace fond. Elle disparaît. C'est dans cet instant éphémère<br className="hide-sm"/>
+            que réside toute la métaphysique du bonheur.&nbsp;»
+          </p>
+        </blockquote>
+
+        <div className="splash-cone-wrap">
+          <div className="splash-cone-halo" aria-hidden />
+          <IceCream3D melt={melt} />
+        </div>
+
+        {/* Timer */}
+        <p className="splash-timer">{timerLabel}</p>
+      </div>
+
+      {/* Bouton */}
+      <div className="splash-bottom">
+        <button type="button" onClick={enter} className="splash-enter">
+          <span className="splash-enter-label">Entrer dans l'enquête</span>
+          <span className="splash-enter-rule" aria-hidden>
+            <span className="rule-line" />
+            <span className="rule-arrow">↓</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  );
+}
+window.Splash = Splash;
+
+
+// ==== ColdReveal.jsx ====
+function ColdReveal() {
+  return (
+    <section id="fonte" className="cold-reveal">
+      <div className="cold-grain" aria-hidden />
+      <div className="cold-halo cold-halo--ice" aria-hidden />
+      <div className="cold-halo cold-halo--meta" aria-hidden />
+      <div className="cold-inner">
+        <span className="cold-eyebrow"><span className="rule rule--inv" /> La fonte</span>
+        <h2 className="cold-title">
+          <span className="cold-line">Quand le froid</span>
+          <span className="cold-line cold-line--italic">se révèle</span>
+        </h2>
+        <p className="cold-lede">
+          La glace fond. Elle disparaît. C'est dans cet instant<br/>
+          éphémère que réside toute la métaphysique du sorbet.
+        </p>
+        <a href="#projet" className="cold-scroll" aria-label="Défiler vers le projet">
+          <span className="cold-scroll-tick" />
+          <span className="cold-scroll-label">Défiler</span>
+        </a>
+      </div>
+    </section>
+  );
+}
+window.ColdReveal = ColdReveal;
+
+// ==== WindSection ====
+const WIND_PHRASES = [
+  {
+    num: "01",
+    label: "Technique",
+    color: "oklch(0.65 0.16 245)",
+    text: <>«&nbsp;Le froid est un <em>savoir-faire</em>.<br/>Chaque cristal, une décision.&nbsp;»</>,
+  },
+  {
+    num: "02",
+    label: "Économie",
+    color: "oklch(0.78 0.1 75)",
+    text: <>«&nbsp;La glace a un prix.<br/><em>Et une valeur qu'on ne mesure pas.</em>&nbsp;»</>,
+  },
+  {
+    num: "03",
+    label: "Métaphysique",
+    color: "oklch(0.5 0.2 305)",
+    text: <>«&nbsp;Ce qui fond sur la langue<br/>ne se raconte pas.<em> Il se ressent.</em>&nbsp;»</>,
+  },
+];
+
+function WindSection() {
+  const [phase, setPhase] = React.useState(-1); // -1 = not started
+  const [leaving, setLeaving] = React.useState(false);
+  const canvasRef = React.useRef(null);
+  const sectionRef = React.useRef(null);
+  const phaseRef = React.useRef(phase);
+  phaseRef.current = phase;
+
+  // Start when section enters viewport
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && phaseRef.current === -1) setPhase(0);
+    }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Wind canvas particles
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let raf;
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
+    resize();
+    const ro = new ResizeObserver(resize); ro.observe(canvas);
+
+    // Particles: ice crystals drifting right
+    const N = 80;
+    const pts = Array.from({ length: N }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.8 + 0.4,
+      vx: Math.random() * 0.6 + 0.2,
+      vy: (Math.random() - 0.5) * 0.3,
+      op: Math.random() * 0.35 + 0.05,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of pts) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(180, 210, 255, ${p.op})`;
+        ctx.fill();
+        p.x += p.vx; p.y += p.vy;
+        if (p.x > canvas.width + 4) { p.x = -4; p.y = Math.random() * canvas.height; }
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+      }
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, []);
+
+  const advance = React.useCallback(() => {
+    if (leaving) return;
+    const cur = phaseRef.current;
+    if (cur < 0 || cur >= WIND_PHRASES.length) return;
+    setLeaving(true);
+    setTimeout(() => {
+      setLeaving(false);
+      setPhase(cur + 1);
+    }, 650);
+  }, [leaving]);
+
+  const isDone = phase >= WIND_PHRASES.length;
+
+  return (
+    <section ref={sectionRef} id="vent" className="wind-section" onClick={!isDone ? advance : undefined}>
+      <canvas ref={canvasRef} className="wind-canvas" />
+      <div className="wind-halo wind-halo--1" aria-hidden />
+      <div className="wind-halo wind-halo--2" aria-hidden />
+
+      <div className="wind-inner">
+        {/* Pill indicators */}
+        <div className="wind-pill-row">
+          {WIND_PHRASES.map((p, i) => (
+            <span key={p.num} className={`wind-pill ${i <= phase && !isDone ? 'active' : ''} ${i < phase || isDone ? 'done' : ''}`}>
+              {p.num} · {p.label}
+            </span>
+          ))}
+        </div>
+
+        {/* Phrase display */}
+        {!isDone && (
+          <div className="wind-phrase-wrap">
+            {phase >= 0 && (
+              <div className={`wind-phrase ${leaving ? 'is-leaving' : 'is-entering'}`}>
+                <p className="wind-phrase-text">{WIND_PHRASES[phase].text}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Done state */}
+        {isDone && (
+          <div className="wind-done-cta">
+            <h3>Trois entrées dans une même matière</h3>
+            <a href="#projet">
+              Découvrir les trois piliers
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            </a>
+          </div>
+        )}
+
+        {/* Hint to click */}
+        {!isDone && phase >= 0 && !leaving && (
+          <div className="wind-hint">
+            <span>Cliquer pour souffler</span>
+            <span className="wind-hint-arrow">→</span>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+window.WindSection = WindSection;
+
+
+</script>
+
+  <script type="text/babel">
+    function ScrollProgress() {
+      const [p, setP] = React.useState(0);
+      React.useEffect(() => {
+        const on = () => {
+          const h = document.documentElement;
+          const pr = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+          setP(pr);
+        };
+        on(); window.addEventListener('scroll', on, {passive:true});
+        return () => window.removeEventListener('scroll', on);
+      }, []);
+      return <div className="scroll-progress" style={{ transform: `scaleX(${p})` }} />;
+    }
+
+    function App() {
+      const [entered, setEntered] = React.useState(false);
+      return (
+        <main>
+          <Splash onEnter={() => setEntered(true)} />
+          <ScrollProgress />
+          <Nav />
+          <WindSection />
+          <Pillars />
+          <Methodology />
+          <Timeline />
+          <Funding />
+          <Footer />
+        </main>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+  </script>
+</body>
+</html>
