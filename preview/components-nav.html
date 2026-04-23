@@ -1,0 +1,28 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Nav</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding: 12px 24px; background: var(--background); }
+  .nav { display:flex; align-items:center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent); }
+  .brand { font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--foreground); }
+  .brand .dot { color: color-mix(in oklab, var(--foreground) 50%, transparent);}
+  ul { display:flex; gap: 26px; margin: 0; padding: 0; list-style: none; align-items:center; }
+  a.link { font-family: var(--font-sans); font-size: 13px; color: color-mix(in oklab, var(--foreground) 70%, transparent); text-decoration:none; position: relative; }
+  a.link::after { content:""; position:absolute; left: 0; bottom: -6px; height: 1px; width: 0; background: var(--foreground); transition: width 300ms cubic-bezier(.22,1,.36,1);}
+  a.link:hover::after { width: 100%; }
+  a.link:hover { color: var(--foreground);}
+  .pill { display:inline-flex; align-items:center; gap:6px; padding: 7px 14px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: var(--foreground);}
+  .scroll { margin-top: 8px; height: 2px; width: 40%; background: color-mix(in oklab, var(--foreground) 80%, transparent); }
+</style></head><body>
+  <div class="scroll"></div>
+  <div class="nav">
+    <a class="brand">Météorologie<span class="dot"> · </span>du goût</a>
+    <ul>
+      <li><a class="link">Le Projet</a></li>
+      <li><a class="link">Méthodologie</a></li>
+      <li><a class="link">Fil conducteur</a></li>
+      <li><a class="link">CIFRE</a></li>
+      <li><a class="link">Contact</a></li>
+      <li><span class="pill">PDF</span></li>
+    </ul>
+  </div>
+</body></html>

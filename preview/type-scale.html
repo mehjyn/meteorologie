@@ -1,0 +1,20 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Échelle typographique</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:18px 24px; }
+  .row { display:grid; grid-template-columns: 90px 1fr auto; gap: 14px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .row:last-child { border-bottom: 0; }
+  .tag { font-family: var(--font-sans); font-size: 10.5px; letter-spacing:.22em; text-transform:uppercase; color: color-mix(in oklab, var(--foreground) 55%, transparent);}
+  .meta { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: color-mix(in oklab, var(--foreground) 55%, transparent);}
+  .s-h1 { font-family: var(--font-serif); font-size: 48px; line-height: .95; margin:0; font-weight:500; }
+  .s-h2 { font-family: var(--font-serif); font-size: 32px; line-height: 1.05; margin:0; font-weight:500; }
+  .s-h3 { font-family: var(--font-serif); font-size: 22px; line-height: 1.15; margin:0; font-weight:500; }
+  .s-body { font-family: var(--font-sans); font-size: 16px; line-height: 1.6; margin:0; }
+  .s-small { font-family: var(--font-sans); font-size: 13px; margin:0; color: color-mix(in oklab, var(--foreground) 60%, transparent);}
+</style></head><body>
+  <div class="row"><span class="tag">H1 display</span><h1 class="s-h1">Trois entrées <em>dans une même matière</em></h1><span class="meta">serif · 500 · 48–120</span></div>
+  <div class="row"><span class="tag">H2 section</span><h2 class="s-h2">Une anthropologie <em>du bonheur</em></h2><span class="meta">serif · 500 · 36–60</span></div>
+  <div class="row"><span class="tag">H3 carte</span><h3 class="s-h3">Le froid comme savoir-faire</h3><span class="meta">serif · 500 · 24–32</span></div>
+  <div class="row"><span class="tag">Body</span><p class="s-body">Suivre la trace d'un sorbet jusqu'à ses ateliers, ses ouvriers, ses récits intimes.</p><span class="meta">Inter · 400 · 16</span></div>
+  <div class="row"><span class="tag">Caption</span><p class="s-small">Master 2 d'Anthropologie sociale et ethnologie — EHESS.</p><span class="meta">Inter · 400 · 13</span></div>
+</body></html>

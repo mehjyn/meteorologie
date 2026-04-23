@@ -1,0 +1,17 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Logo typographique</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding: 24px; background: var(--background); display:flex; gap: 28px; align-items:center; }
+  .mark-lg { font-family: var(--font-serif); font-style: italic; font-size: 32px; line-height: 1.1; color: var(--foreground); }
+  .mark-lg .dot { color: color-mix(in oklab, var(--foreground) 50%, transparent); }
+  .mark-sm { font-family: var(--font-serif); font-style: italic; font-size: 16px; color: var(--foreground); }
+  .stacked { font-family: var(--font-serif); font-style: italic; line-height: 1; display: inline-block; text-align: center; }
+  .stacked .top { display:block; font-size: 22px; }
+  .stacked .mid { display:block; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; font-style: normal; font-family: var(--font-sans); margin: 6px 0; color: color-mix(in oklab, var(--foreground) 55%, transparent);}
+  .stacked .bot { display:block; font-size: 22px; }
+  .chip { padding: 20px 22px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-2xl); }
+</style></head><body>
+  <div class="chip"><span class="mark-lg">Météorologie<span class="dot"> · </span>du goût</span></div>
+  <div class="chip" style="background: var(--foreground);"><span class="mark-lg" style="color: var(--background)">Météorologie<span class="dot" style="color: color-mix(in oklab, var(--background) 55%, transparent)"> · </span>du goût</span></div>
+  <div class="chip"><span class="stacked"><span class="top">Météorologie</span><span class="mid">— du —</span><span class="bot">goût</span></span></div>
+</body></html>

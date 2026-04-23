@@ -1,0 +1,18 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Boutons</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:22px 24px; display:flex; flex-wrap:wrap; gap: 14px; align-items:center; }
+  .btn-primary { position:relative; overflow:hidden; display:inline-flex; align-items:center; gap:12px; padding: 14px 26px; border-radius: 999px; background: var(--foreground); color: var(--background); font-family: var(--font-sans); font-size: 14px; font-weight:500; border: 1px solid var(--foreground); cursor: pointer; }
+  .btn-primary .arrow { width: 16px; height: 16px; }
+  .btn-ghost { display:inline-flex; align-items:center; gap:8px; padding: 14px 22px; border-radius: 999px; background: transparent; border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); color: var(--foreground); font-family: var(--font-sans); font-size: 13px; font-weight:500; cursor:pointer; }
+  .btn-link { color: color-mix(in oklab, var(--foreground) 70%, transparent); text-decoration: underline; text-underline-offset: 4px; font-family: var(--font-sans); font-size: 14px; font-weight: 500; }
+  .pill-pdf { display:inline-flex; align-items:center; gap:8px; padding: 8px 14px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); color: var(--foreground); font-family: var(--font-sans); font-size: 12px; font-weight: 500; }
+</style></head><body>
+  <button class="btn-primary"><span>Découvrir le projet</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
+  <button class="btn-ghost">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Me contacter
+  </button>
+  <span class="btn-link">Prendre contact →</span>
+  <span class="pill-pdf"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</span>
+</body></html>

@@ -1,0 +1,20 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Easing & durées</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:22px 24px; }
+  .row { display:grid; grid-template-columns: 140px 1fr; gap: 16px; align-items:center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .row:last-child { border-bottom:0; }
+  .name { font-family: var(--font-serif); font-size: 16px; font-style: italic; color: var(--foreground); }
+  .code { font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: color-mix(in oklab, var(--foreground) 55%, transparent);}
+  .track { position: relative; height: 12px; background: color-mix(in oklab, var(--foreground) 8%, transparent); border-radius: 999px; overflow: hidden; }
+  .dot { position: absolute; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: var(--foreground); left: 0; animation: slide 2.4s infinite cubic-bezier(0.22, 1, 0.36, 1); }
+  .short .dot { animation-duration: 1.2s; }
+  .mid .dot { animation-duration: 2s; }
+  .long .dot { animation-duration: 2.8s; }
+  @keyframes slide { 0%{left:0} 50%{left:calc(100% - 14px)} 100%{left:0} }
+</style></head><body>
+  <div class="row short"><span class="name">300 ms · court</span><div class="track"><span class="dot"></span></div></div>
+  <div class="row mid"><span class="name">500 ms · UI hover</span><div class="track"><span class="dot"></span></div></div>
+  <div class="row long"><span class="name">700 ms · révélation</span><div class="track"><span class="dot"></span></div></div>
+  <div class="row"><span class="code">easing</span><span class="code">cubic-bezier(0.22, 1, 0.36, 1) · « silk »</span></div>
+</body></html>

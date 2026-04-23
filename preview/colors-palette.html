@@ -1,0 +1,25 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Palette — Terre & terrain</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:22px 24px; }
+  .row { display:grid; grid-template-columns: repeat(5, 1fr); gap:14px; }
+  .sw { display:flex; flex-direction:column; gap:6px; }
+  .chip { height:72px; border-radius: var(--radius-xl); border:1px solid var(--border); box-shadow: 0 1px 0 oklch(1 0 0 / .6) inset; }
+  .name { font-family: var(--font-sans); font-size: 11px; letter-spacing:.16em; text-transform:uppercase; color: color-mix(in oklab, var(--foreground) 55%, transparent); }
+  .hex { font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: color-mix(in oklab, var(--foreground) 70%, transparent); }
+  .title { font-family: var(--font-serif); font-style: italic; font-size: 15px; margin: 0 0 14px; color: color-mix(in oklab, var(--foreground) 65%, transparent); }
+</style></head><body>
+<p class="title">« Terre & terrain » — fondations chaudes</p>
+<div class="row">
+  <div class="sw"><div class="chip" style="background:var(--background)"></div><div class="name">background</div><div class="hex">#F5F0E6</div></div>
+  <div class="sw"><div class="chip" style="background:var(--cream)"></div><div class="name">cream</div><div class="hex">oklch(.98 .01 90)</div></div>
+  <div class="sw"><div class="chip" style="background:var(--secondary)"></div><div class="name">secondary</div><div class="hex">oklch(.91 .022 80)</div></div>
+  <div class="sw"><div class="chip" style="background:var(--accent)"></div><div class="name">accent</div><div class="hex">oklch(.88 .03 75)</div></div>
+  <div class="sw"><div class="chip" style="background:var(--earth-deep)"></div><div class="name">earth-deep</div><div class="hex">oklch(.78 .04 70)</div></div>
+  <div class="sw"><div class="chip" style="background:var(--muted-foreground)"></div><div class="name">muted-fg</div><div class="hex">oklch(.45 .035 50)</div></div>
+  <div class="sw"><div class="chip" style="background:var(--ring)"></div><div class="name">ring</div><div class="hex">oklch(.55 .05 50)</div></div>
+  <div class="sw"><div class="chip" style="background:var(--border)"></div><div class="name">border</div><div class="hex">oklch(.85 .025 75)</div></div>
+  <div class="sw"><div class="chip" style="background:var(--foreground)"></div><div class="name">foreground / ink</div><div class="hex">#3D2314</div></div>
+  <div class="sw"><div class="chip" style="background:var(--destructive)"></div><div class="name">destructive</div><div class="hex">oklch(.577 .245 27)</div></div>
+</div>
+</body></html>

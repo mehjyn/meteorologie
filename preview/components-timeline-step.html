@@ -1,0 +1,20 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Step de timeline</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding: 22px 24px; background: var(--background); }
+  .wrap { display:grid; grid-template-columns: 1fr 1fr; gap: 40px; position: relative; }
+  .line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border); transform: translateX(-50%); }
+  .line .filled { position: absolute; left: 0; top: 0; width: 100%; height: 55%; background: linear-gradient(to bottom, var(--ice-to), var(--ochre-from), var(--meta-to)); }
+  .dot { position: absolute; left: 50%; top: 8px; transform: translate(-50%, 0); width: 36px; height: 36px; border-radius: 999px; background: var(--background); border: 1px solid color-mix(in oklab, var(--foreground) 30%, transparent); display:grid; place-items:center; z-index:2; }
+  .year { font-family: var(--font-serif); font-style: italic; font-size: 44px; font-weight: 500; color: color-mix(in oklab, var(--foreground) 30%, transparent); text-align: right; line-height: 1; }
+  .place { font-family: var(--font-sans); font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: color-mix(in oklab, var(--foreground) 55%, transparent); margin-top: 4px; text-align:right;}
+  .title { font-family: var(--font-serif); font-size: 22px; font-weight: 500; line-height: 1.2; color: var(--foreground); margin: 0;}
+  .concept { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: color-mix(in oklab, var(--foreground) 55%, transparent); margin-top: 4px;}
+</style></head><body>
+  <div class="wrap">
+    <div class="line"><div class="filled"></div></div>
+    <div class="dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12h3M19 12h3M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1M12 8v8M8 12h8"/></svg></div>
+    <div style="padding-right:40px;"><div class="year">2026</div><div class="place">Ateliers glaciers · trois pays</div></div>
+    <div style="padding-left:40px;"><h3 class="title">Météorologie du goût</h3><p class="concept">« Climat intime du plaisir »</p></div>
+  </div>
+</body></html>

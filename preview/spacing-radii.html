@@ -1,0 +1,18 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Radii</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:22px 24px; }
+  .row { display:grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .box { height: 84px; background: var(--card); border:1px solid var(--border); display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 10px; }
+  .tag { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: color-mix(in oklab, var(--foreground) 60%, transparent); }
+  .px  { font-family: var(--font-sans); font-size: 11px; letter-spacing:.18em; text-transform:uppercase; color: color-mix(in oklab, var(--foreground) 50%, transparent);}
+</style></head><body>
+  <div class="row">
+    <div class="box" style="border-radius: var(--radius-sm)"><span class="tag">--radius-sm</span><span class="px">4 px</span></div>
+    <div class="box" style="border-radius: var(--radius-md)"><span class="tag">--radius-md</span><span class="px">6 px</span></div>
+    <div class="box" style="border-radius: var(--radius-lg)"><span class="tag">--radius-lg</span><span class="px">8 px</span></div>
+    <div class="box" style="border-radius: var(--radius-xl)"><span class="tag">--radius-xl</span><span class="px">12 px</span></div>
+    <div class="box" style="border-radius: var(--radius-2xl)"><span class="tag">--radius-2xl</span><span class="px">16 px · carte</span></div>
+    <div class="box" style="border-radius: 9999px"><span class="tag">full</span><span class="px">pilule CTA</span></div>
+  </div>
+</body></html>

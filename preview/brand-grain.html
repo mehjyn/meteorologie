@@ -1,0 +1,19 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Texture grain & halos</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding: 22px 24px; }
+  .surface { position: relative; overflow: hidden; height: 260px; border-radius: var(--radius-2xl); border: 1px solid var(--border); background: var(--background); display:flex; flex-direction:column; justify-content:flex-end; padding: 20px; }
+  .surface .grain { position: absolute; inset: 0; }
+  .surface .halo1 { position: absolute; right: -80px; top: -40px; width: 240px; height: 240px; border-radius: 50%; background: linear-gradient(135deg, var(--ice-from), var(--ice-to)); opacity: .08; filter: blur(48px); }
+  .surface .halo2 { position: absolute; left: -80px; bottom: -80px; width: 240px; height: 240px; border-radius: 50%; background: linear-gradient(135deg, var(--meta-from), var(--meta-to)); opacity: .10; filter: blur(48px); }
+  .surface .label { position: relative; font-family: var(--font-sans); font-size: 11px; letter-spacing: .22em; text-transform:uppercase; color: color-mix(in oklab, var(--foreground) 55%, transparent); }
+  .surface .name { position: relative; font-family: var(--font-serif); font-size: 26px; font-style: italic; color: var(--foreground); margin-top:6px;}
+</style></head><body>
+  <div class="surface">
+    <div class="grain grain-texture"></div>
+    <div class="halo1"></div>
+    <div class="halo2"></div>
+    <span class="label">Texture signature</span>
+    <span class="name">grain-texture + halos flous</span>
+  </div>
+</body></html>

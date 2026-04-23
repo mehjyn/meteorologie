@@ -1,0 +1,30 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Carte pilier</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:22px 24px; background: var(--background); }
+  .card { position: relative; isolation: isolate; overflow: hidden; border-radius: var(--radius-2xl); border: 1px solid var(--border); background: var(--card); padding: 22px; color: var(--card-foreground); box-shadow: 0 1px 0 oklch(1 0 0 / .6) inset; height: 300px; display: flex; flex-direction: column; }
+  .card .gradient { position: absolute; inset: 0; transform: translateY(100%); opacity: 0; transition: transform 700ms cubic-bezier(.22,1,.36,1), opacity 700ms; z-index: 0; }
+  .card:hover .gradient { transform: translateY(0); opacity: 1; }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px oklch(0 0 0 / .25); border-color: transparent; color: #fff; }
+  .card > * { position: relative; z-index: 1; }
+  .head { display:flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; transition: color 700ms; }
+  .num { font-family: var(--font-serif); font-style: italic; font-size: 13px; color: color-mix(in oklab, var(--foreground) 40%, transparent); }
+  .card:hover .num { color: rgba(255,255,255,.7); }
+  .icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--foreground) 15%, transparent); display:grid; place-items:center; transition: all 700ms; }
+  .card:hover .icon { border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.1); transform: rotate(12deg);}
+  .title { font-family: var(--font-serif); font-size: 32px; font-weight: 500; line-height: 1.1; margin: auto 0 0; }
+  .sub { font-family: var(--font-serif); font-style: italic; font-size: 15px; color: color-mix(in oklab, var(--foreground) 55%, transparent); margin-top: 6px; }
+  .body { font-size: 13.5px; line-height: 1.6; color: color-mix(in oklab, var(--foreground) 70%, transparent); margin-top: 14px; }
+  .card:hover .sub, .card:hover .body { color: rgba(255,255,255,.88); }
+</style></head><body>
+  <div class="card" onmouseenter="this.classList.add('hover')" onmouseleave="this.classList.remove('hover')">
+    <div class="gradient gradient-ice"></div>
+    <div class="head">
+      <span class="num">01 / 03</span>
+      <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+    </div>
+    <h3 class="title">Technique</h3>
+    <p class="sub">Le froid comme savoir-faire</p>
+    <p class="body">Saisir les gestes de l'artisan glacier : la maîtrise des cristaux, la lente acclimatation des sucres, la chimie patiente du froid.</p>
+  </div>
+</body></html>
