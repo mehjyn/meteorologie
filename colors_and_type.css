@@ -1,0 +1,229 @@
+/* =====================================================================
+   Météorologie du goût — Design System
+   Base Type & Color Tokens
+   ---------------------------------------------------------------------
+   "Terre & terrain" : beige chaleureux, chocolat profond, trois gradients
+   de pilier révélés au hover (glace, ocre, métaphysique).
+   Toutes les couleurs sont définies en OKLCH pour la cohérence perceptuelle.
+   Source: src/styles.css of field-to-frost-folio.
+   ===================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* -------- Font families -------- */
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* =====================================================================
+     PALETTE — "Terre & terrain"
+     ===================================================================== */
+
+  /* Fondations : beige chaleureux & chocolat profond */
+  --background: oklch(0.953 0.018 85);   /* #F5F0E6  beige papier */
+  --foreground: oklch(0.27 0.045 45);    /* #3D2314  chocolat profond */
+  --cream: oklch(0.98 0.01 90);          /* presque blanc crémeux */
+  --ink: oklch(0.27 0.045 45);           /* même que foreground */
+  --earth: oklch(0.953 0.018 85);
+  --earth-deep: oklch(0.78 0.04 70);     /* terre cuite atténuée */
+
+  /* Surfaces & UI */
+  --card: oklch(0.965 0.014 85);
+  --card-foreground: oklch(0.27 0.045 45);
+  --popover: oklch(0.97 0.012 85);
+  --popover-foreground: oklch(0.27 0.045 45);
+
+  --primary: oklch(0.27 0.045 45);
+  --primary-foreground: oklch(0.97 0.014 85);
+  --secondary: oklch(0.91 0.022 80);
+  --secondary-foreground: oklch(0.27 0.045 45);
+  --muted: oklch(0.92 0.018 80);
+  --muted-foreground: oklch(0.45 0.035 50);
+  --accent: oklch(0.88 0.03 75);
+  --accent-foreground: oklch(0.27 0.045 45);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+
+  --border: oklch(0.85 0.025 75);
+  --input: oklch(0.88 0.025 75);
+  --ring: oklch(0.55 0.05 50);
+
+  /* =====================================================================
+     LES TROIS PILIERS — gradients signature
+     Chaque pilier correspond à une "entrée dans la matière glace".
+     ===================================================================== */
+
+  /* I · Technique — bleu acier glacé */
+  --ice-from: oklch(0.32 0.08 250);      /* #1E3A5F */
+  --ice-to:   oklch(0.65 0.16 245);      /* #4A90E2 */
+
+  /* II · Économie & Social — ocre / or chaud */
+  --ochre-from: oklch(0.5 0.12 80);      /* #8B6914 */
+  --ochre-to:   oklch(0.78 0.1 75);      /* #D4A574 */
+
+  /* III · Métaphysique & Sensoriel — indigo / violet */
+  --meta-from: oklch(0.28 0.1 295);      /* #2D1B4E */
+  --meta-to:   oklch(0.5 0.2 305);       /* #7B3FA0 */
+
+  /* =====================================================================
+     RAYONS & RADIUS
+     ===================================================================== */
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px); /* 4px  */
+  --radius-md: calc(var(--radius) - 2px); /* 6px  */
+  --radius-lg: var(--radius);             /* 8px  */
+  --radius-xl: calc(var(--radius) + 4px); /* 12px */
+  --radius-2xl: calc(var(--radius) + 8px);/* 16px */
+  --radius-3xl: calc(var(--radius) + 12px);/* 20px */
+
+  /* =====================================================================
+     TYPOGRAPHIE — échelle sémantique
+     Serif Playfair Display pour les titres et citations ;
+     Sans Inter pour texte courant et UI.
+     Figures "lnum" (chiffres anciens) sur les titres.
+     ===================================================================== */
+
+  /* Display — Hero (clamp) */
+  --fs-display: clamp(2.75rem, 9vw, 7.5rem);
+  --lh-display: 0.95;
+  --ls-display: -0.01em;
+
+  /* Section H2 */
+  --fs-h2: clamp(2.25rem, 5vw, 3.75rem);   /* ~36–60px */
+  --lh-h2: 1.05;
+
+  /* Sub-h3 (carte, terrain) */
+  --fs-h3: clamp(1.5rem, 2.4vw, 2rem);
+  --lh-h3: 1.15;
+
+  /* Baseline copy */
+  --fs-body: 1rem;                         /* 16px */
+  --fs-body-lg: 1.0625rem;                 /* 17px */
+  --lh-body: 1.7;
+
+  /* Petites capitales / étiquettes */
+  --fs-eyebrow: 0.75rem;                   /* 12px */
+  --tracking-eyebrow: 0.25em;
+
+  /* Citation sérif italique */
+  --fs-quote: clamp(1.25rem, 1.8vw, 1.5rem);
+  --lh-quote: 1.45;
+
+  /* =====================================================================
+     TRANSITIONS — rythme "cinéma"
+     ===================================================================== */
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);   /* ease-out "silk" signature */
+  --dur-short: 300ms;
+  --dur-mid: 500ms;
+  --dur-long: 700ms;
+  --dur-xl: 900ms;
+}
+
+/* =====================================================================
+   DARK MODE — "nuit en atelier"
+   ===================================================================== */
+.dark {
+  --background: oklch(0.18 0.025 45);
+  --foreground: oklch(0.95 0.018 85);
+  --card: oklch(0.22 0.03 45);
+  --card-foreground: oklch(0.95 0.018 85);
+  --popover: oklch(0.22 0.03 45);
+  --popover-foreground: oklch(0.95 0.018 85);
+  --primary: oklch(0.95 0.018 85);
+  --primary-foreground: oklch(0.27 0.045 45);
+  --secondary: oklch(0.3 0.03 45);
+  --secondary-foreground: oklch(0.95 0.018 85);
+  --muted: oklch(0.28 0.025 45);
+  --muted-foreground: oklch(0.7 0.025 70);
+  --accent: oklch(0.32 0.04 50);
+  --accent-foreground: oklch(0.95 0.018 85);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.6 0.04 70);
+}
+
+/* =====================================================================
+   APPLIQUÉS — styles sémantiques
+   ===================================================================== */
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "lnum";
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: var(--fs-display); line-height: var(--lh-display); }
+h2 { font-size: var(--fs-h2);       line-height: var(--lh-h2); }
+h3 { font-size: var(--fs-h3);       line-height: var(--lh-h3); }
+
+p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: color-mix(in oklab, var(--foreground) 75%, transparent);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--foreground) 50%, transparent);
+}
+
+.italic-serif, em {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-quote);
+  line-height: var(--lh-quote);
+}
+
+code, pre, .mono {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+::selection {
+  background-color: var(--ink);
+  color: var(--cream);
+}
+
+/* =====================================================================
+   UTILITAIRES — texture & gradients signature
+   ===================================================================== */
+.grain-texture {
+  background-image:
+    radial-gradient(circle at 20% 30%, oklch(0.85 0.04 70 / 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, oklch(0.82 0.05 60 / 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, oklch(0.78 0.04 80 / 0.3) 0%, transparent 50%);
+}
+
+.gradient-ice    { background-image: linear-gradient(135deg, var(--ice-from),   var(--ice-to)); }
+.gradient-ochre  { background-image: linear-gradient(135deg, var(--ochre-from), var(--ochre-to)); }
+.gradient-meta   { background-image: linear-gradient(135deg, var(--meta-from),  var(--meta-to)); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
